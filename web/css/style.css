@@ -1,0 +1,61 @@
+#principal{
+	background-color: transparent;
+	width: 1265px;
+	height: 500px;
+	margin-top: 100px;
+}
+#uno{
+	
+	width: 300px;
+	height:	100px;
+	margin-left: 305px;
+	margin-top: 150px;
+	position: absolute;
+}
+#dos{
+	
+	width: 300px;
+	height:	100px;
+	margin-left: 525px;
+	margin-top: 150px;
+	position: absolute;
+}
+#tres{
+	
+	width: 300px;
+	height:	100px;
+	margin-left: 745px;
+	margin-top: 150px;
+	position: absolute;
+}
+
+#cuatro{
+	margin-left: -15px;
+	margin-top: 130px;
+	position: absolute;
+}
+
+#cinco{
+	margin-left: 1170px;
+	margin-top: 130px;
+	position: absolute;
+}
+
+#extra1{
+	
+	width: 200px;
+	height:	100px;
+	margin-left: 85px;
+	margin-top: 150px;
+	position: absolute;
+}
+
+#extra2{
+	
+	width: 200px;
+	height:	100px;
+	margin-left: 975px;
+	margin-top: 150px;
+	position: absolute;
+}
+	

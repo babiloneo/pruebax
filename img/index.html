@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/hcap.js"></script>
+
+	<title></title>
+</head>
+<body style="background-image:url(tv:);">
+
+	<h1>hola1</h1>
+
+</body >
+</html>
+
+<script type="text/javascript">
+Date.prototype.yyyymmdd = function () {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
+    return [this.getFullYear(),
+        (mm > 9 ? '' : '0') + mm, // Si el mes es mayor a 9 lo dejamos como esta, en caso contrario agregamos un cero antes del numero de mes
+        (dd > 9 ? '' : '0') + dd  // Si el dia es mayor a 9 lo dejamos como esta, en caso contrario agregamos un cero antes del numero de mes
+    ].join('');
+};
+
+var ActualDate = new Date();                                                  /* Obtiene la fecha actual en el dispositivo */
+var ADate = ActualDate.yyyymmdd();                                            /* Asigna formato a la fecha obtenida para poder trabajarlo */
+var EPGData = '';                                                             /* Variable que almacena el arreglo con la informacion de la EPG */
+var EPGDataDate = ADate;                                                      /* Variable que almacena fecha/hora de la epg cargada actualmente */
+var EPGSwitch = false;                                                        /* Bandera que indica que los datos se han cargado en EPGData */
+var EPGOn = false;                                                            /* Bandera que indica que la EPG se encuentra activa */
+var CheckEPGData = 0;                                                         /* Checador de lectura de archivos por fecha en el directorio de los JSON */
+var MaxWidth = ((window.innerWidth)*85)/105;                                  /* Variable que almacena el ancho maximo de pantalla */
+var MaxHeight = ((window.innerHeight)*49)/105;                                /* Variable que almacena el alto maximo de pantalla */
+var Hours = [];                                                               /* SubArreglos */
+var Position = 0, ChannelPosition = 0, ProgramPosition = 0, YP=0;             /* Variables indicadoras de posiciones dentro del arreglo de horas, canales y programas. Respectivamente */
+var TimerCloseEPG = null;                                                     /* Timer para cierre automatico de la EPG */
+var Duration = 64;                                                            /* Equivalencia en porcentaje (width) a duracion de 1 hora */
+var CurrentProgram = 0;                                                       /* Indice del programa actual */
+var InfoOn = false;                                                           /* Bandera indicadora del estado de la barra de informacion*/
+var LastChannelId = 0;                                                        /* Guarda el id del canal anterior, el cual se utilizara para el p<p */
+var ParentalControl,Language,Nudity,Violence,StrongContent,Plus18,Plus13,AdultSituations,NotRated;/* Variables para el control parental */
+var BackgroundAudio = false;                                                  /* Background canales de audio */
+var SETTINGS_on = false;                                                      /* Indicador del manu de configuraciones */
+var AuxLog = 0;                                                               /* Variable auxiliar para validacion el largo del elemento con el foco actual */
+var TimerCheckEPGData = null;                                                 /* Bandera que revisara el estado de la EPG por intervalo de tiempo X */
+var SettingsOn = false;                                                       /* Bandera que revisa el estado del formulario de settings del dispositivo */
+var OpSettingsOn = false;                                                     /* Bandera que revisa el estado del formulario de Opciones - settings del dispositivo */
+var DevicePassword = 0;                                                       /* Variable que almacanara el password del dispositivo*/
+var CounterDevicePassword = 0;                                                /* Variable que contara el numero de caracteres del password del dispositivo*/
+var Number = 0;
+var aux;   
+var sub; 
+function ReadTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType('application/json');
+    rawFile.open('GET', file, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4 && rawFile.status == '200') {
+            callback(rawFile.responseText);
+        } else {
+            callback(false);
+        }
+    };
+    rawFile.send(null);
+}
+ReadTextFile('./EPG/epg.json', function (text) {
+
+        EPGData = JSON.parse(text);
+       aux = EPGData[1].src;
+       
+      sub = aux.substring(17, 7);
+	 
+	  console.log('"'+sub+'"');
+	    var param2 = {
+	    "channelType":hcap.channel.ChannelType.IP, 
+	    "ip":"1.1.1.1",
+	    "port":2001,
+	    "ipBroadcastType":hcap.channel.IpBroadcastType.UDP,
+	    "onSuccess":onSuccess, 
+    	"onFailure":onFailure
+	};
+	hcap.channel.requestChangeCurrentChannel(param2);
+});	
+function onSuccess() {
+    alert("onSuccess:");
+}
+
+function onFailure(param2) {
+    alert("onFailure : errorMessage = " + param.errorMessage);
+}
+</script>
